@@ -3,6 +3,10 @@ package employeepayroll;
 import java.util.*;
 
 public class EmployeePayrollService {
+    public EmployeePayrollService() {
+
+    }
+
     public enum IOService{CONSOLE_IO,FILE_IO,DB_IO,REST_IO}
 
     public List<EmployeePayrollData> employeePayrollList;
@@ -26,6 +30,12 @@ public class EmployeePayrollService {
         }else if (ioService.equals(IOService.FILE_IO)){
             new EmployeePayrollFileIOService().readData();
         }
+    }
+
+    public List<EmployeePayrollData> readEmployeePayrollData(IOService ioService) {
+        if(ioService.equals(IOService.DB_IO))
+            this.employeePayrollList = new EmployeePayrollDBService().readData();
+        return this.employeePayrollList;
     }
 
     public void writeEmployeeData(IOService ioService){
