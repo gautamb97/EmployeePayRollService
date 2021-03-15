@@ -41,4 +41,11 @@ public class NioFileTest {
                 .forEach(System.out::println);
     }
 
+    @Test
+    public void givenADirectoryWhenWatchedListsAllTheActivities() throws IOException {
+        Path dir = Paths.get(HOME+"/"+PLAY_WITH_NIO);
+        Files.list(dir).filter(Files::isRegularFile).forEach(System.out::println);
+        new Java8WatchServiceExample(dir).processEvent();
+    }
+
 }
