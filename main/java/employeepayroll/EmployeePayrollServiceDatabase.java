@@ -19,7 +19,7 @@ public class EmployeePayrollServiceDatabase {
         }
         listDrivers();
         try{
-            System.out.println("Connecting to databse:"+jdbcURL);
+            System.out.println("Connecting to database:"+jdbcURL);
             connection = DriverManager.getConnection(jdbcURL, userName, password);
             System.out.println("Connection is successful!!!"+connection);
         }catch (Exception e){
