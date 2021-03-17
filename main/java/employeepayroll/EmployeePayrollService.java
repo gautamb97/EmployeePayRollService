@@ -89,6 +89,10 @@ public class EmployeePayrollService {
                 .orElse(null);
     }
 
+    public void addEmployeeToPayroll(String name, double salary, LocalDate startDate, String gender) {
+        employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name, salary, startDate, gender));
+    }
+
     public void writeEmployeeData(IOService ioService){
         if (ioService.equals(IOService.CONSOLE_IO))
             System.out.println("OutPut\n"+employeePayrollList);

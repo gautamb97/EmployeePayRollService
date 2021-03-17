@@ -87,4 +87,13 @@ public class EmployeePayrollServiceTest {
         Assert.assertTrue(countEmployeeByGender.get("M").equals(2) &&
                 countEmployeeByGender.get("F").equals(1));
     }
+
+    @Test
+    public void givenNewEmployee_WhenAdded_ShouldSyncWithDB(){
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        employeePayrollService.readEmployeePayrollData(DB_IO);
+        employeePayrollService.addEmployeeToPayroll("Mark", 5000000.00, LocalDate.now(), "M");
+        boolean result = employeePayrollService.checkEmployeePayrollInSyncWithDB("Mark");
+        Assert.assertTrue(result);
+    }
 }
