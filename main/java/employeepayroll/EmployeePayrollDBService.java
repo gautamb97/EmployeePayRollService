@@ -124,4 +124,21 @@ public class EmployeePayrollDBService {
         }
         return genderToAvgSalaryMap;
     }
+
+    public Map<String, Double> getMinimumSalaryByGender() {
+        String sql = "SELECT gender, MIN(salary) as min_salary FROM employee_payroll GROUP BY gender;";
+        Map<String, Double> genderToMinSalaryMap = new HashMap<>();
+        try(Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while(resultSet.next()){
+                String gender = resultSet.getString("gender");
+                double salary = resultSet.getDouble("min_salary");
+                genderToMinSalaryMap.put(gender, salary);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return genderToMinSalaryMap;
+    }
 }

@@ -53,6 +53,11 @@ public class EmployeePayrollService {
         return null;
     }
 
+    public Map<String, Double> readMinimumSalaryByGender(IOService ioService) {
+        if(ioService.equals(IOService.DB_IO))
+            return employeePayrollDBService.getMinimumSalaryByGender();
+        return null;
+    }
     public boolean checkEmployeePayrollInSyncWithDB(String name) {
         List<EmployeePayrollData> employeePayrollDataList = employeePayrollDBService.getEmployeePayrollData(name);
         return employeePayrollDataList.get(0).equals(getEmployeePayrollData(name));
