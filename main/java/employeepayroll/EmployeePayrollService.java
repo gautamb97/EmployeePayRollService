@@ -1,17 +1,12 @@
 package employeepayroll;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class EmployeePayrollService {
     private EmployeePayrollDBService employeePayrollDBService;
     public EmployeePayrollService() {
         employeePayrollDBService = EmployeePayrollDBService.getInstance();
-    }
-
-    public List<EmployeePayrollData> readEmployeePayrollDataForDateRange(IOService ioService, String start_date, String end_date) {
-        if(ioService.equals(IOService.DB_IO))
-            this.employeePayrollList = employeePayrollDBService.readDataForDateRange(start_date,end_date);
-        return this.employeePayrollList;
     }
 
     public enum IOService{CONSOLE_IO,FILE_IO,DB_IO,REST_IO}
@@ -44,6 +39,12 @@ public class EmployeePayrollService {
         if(ioService.equals(IOService.DB_IO))
             this.employeePayrollList = employeePayrollDBService.readData();
         return this.employeePayrollList;
+    }
+
+    public List<EmployeePayrollData> readEmployeePayrollForDateRange(IOService ioService, LocalDate startDate, LocalDate endDate) {
+        if(ioService.equals(IOService.DB_IO))
+            return employeePayrollDBService.getEmployeeForPayrollDateRange(startDate, endDate);
+        return null;
     }
 
     public boolean checkEmployeePayrollInSyncWithDB(String name) {

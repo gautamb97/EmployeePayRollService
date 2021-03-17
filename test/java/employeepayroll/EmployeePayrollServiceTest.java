@@ -3,6 +3,7 @@ package employeepayroll;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,9 +43,12 @@ public class EmployeePayrollServiceTest {
     @Test
     public void givenDateRangeForEmployee_WhenRetrieved_ShouldMatchEmployeeCount(){
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-        String start_date = "2020-01-01";
-        String end_date = "2020-05-22";
-        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmployeePayrollDataForDateRange(EmployeePayrollService.IOService.DB_IO,start_date,end_date);
-        Assert.assertEquals(3,employeePayrollData.size());
+        employeePayrollService.readEmployeePayrollData(DB_IO);
+        LocalDate startDate = LocalDate.of(2020, 01, 01);
+        LocalDate endDate = LocalDate.now();
+        List<EmployeePayrollData> employeePayrollData =
+                employeePayrollService.readEmployeePayrollForDateRange(DB_IO, startDate, endDate);
+        Assert.assertEquals(3, employeePayrollData.size());
     }
+
 }
