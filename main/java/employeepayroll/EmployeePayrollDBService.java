@@ -158,4 +158,21 @@ public class EmployeePayrollDBService {
         }
         return genderToMaxSalaryMap;
     }
+
+    public Map<String, Integer> getCountEmployeeByGender() {
+        String sql = "SELECT gender, COUNT(salary) as count_employee FROM employee_payroll GROUP BY gender;";
+        Map<String, Integer> genderCountMap = new HashMap<>();
+        try(Connection connection = this.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while(resultSet.next()){
+                String gender = resultSet.getString("gender");
+                int countEmployee = resultSet.getInt("count_employee");
+                genderCountMap.put(gender, countEmployee);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return genderCountMap;
+    }
 }

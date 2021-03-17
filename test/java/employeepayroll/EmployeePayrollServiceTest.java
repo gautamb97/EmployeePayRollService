@@ -78,4 +78,13 @@ public class EmployeePayrollServiceTest {
         Assert.assertTrue(maximumSalaryByGender.get("M").equals(3000000.00) &&
                 maximumSalaryByGender.get("F").equals(3000000.00));
     }
+
+    @Test
+    public void givenPayrollData_WhenCountEmployeeRetrievedByGender_ShouldReturnProperValue(){
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        employeePayrollService.readEmployeePayrollData(DB_IO);
+        Map<String, Integer> countEmployeeByGender = employeePayrollService.countEmployeeByGender(DB_IO);
+        Assert.assertTrue(countEmployeeByGender.get("M").equals(2) &&
+                countEmployeeByGender.get("F").equals(1));
+    }
 }

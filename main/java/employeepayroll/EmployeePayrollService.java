@@ -64,6 +64,11 @@ public class EmployeePayrollService {
             return employeePayrollDBService.getMaximumSalaryByGender();
         return null;
     }
+    public Map<String, Integer> countEmployeeByGender(IOService ioService) {
+        if(ioService.equals(IOService.DB_IO))
+            return employeePayrollDBService.getCountEmployeeByGender();
+        return null;
+    }
 
     public boolean checkEmployeePayrollInSyncWithDB(String name) {
         List<EmployeePayrollData> employeePayrollDataList = employeePayrollDBService.getEmployeePayrollData(name);
