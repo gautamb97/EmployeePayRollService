@@ -99,6 +99,28 @@ public class EmployeePayrollService {
         System.out.println(this.employeePayrollList);
     }
 
+    public void addEmployeesToPayrollWithThreads(List<EmployeePayrollData> employeePayrollDataList) {
+        Map<Integer,Boolean> employeeAdditionStatus = new HashMap<>();
+        employeePayrollDataList.forEach(employeePayrollData -> {
+            Runnable task = () -> {
+                employeeAdditionStatus.put(employeePayrollData.hashCode(), false);
+                System.out.println("Employee Being Added: "+Thread.currentThread().getName());
+                this.addEmployeeToPayroll(employeePayrollData.employeeName, employeePayrollData.employeeSalary,
+                                          employeePayrollData.startDate, employeePayrollData.gender);
+                employeeAdditionStatus.put(employeePayrollData.hashCode(), true);
+                System.out.println("Employee Added: "+Thread.currentThread().getName());
+            };
+            Thread thread = new Thread(task, employeePayrollData.employeeName);
+            thread.start();
+        });
+        while (employeeAdditionStatus.containsValue(false)){
+            try{
+                Thread.sleep(10);
+            } catch (InterruptedException e){ }
+        }
+        System.out.println(this.employeePayrollList);
+    }
+
     public void addEmployeeToPayroll(String name, double salary, LocalDate startDate, String gender) {
         employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name, salary, startDate, gender));
     }
@@ -113,6 +135,7 @@ public class EmployeePayrollService {
     public void printEmployeeData(IOService ioService) {
         if (ioService.equals(IOService.FILE_IO))
             new EmployeePayrollFileIOService().printData();
+        else System.out.println(employeePayrollList);
     }
 
     public long countEntries(IOService ioService) {

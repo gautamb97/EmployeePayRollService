@@ -1,6 +1,7 @@
 package employeepayroll;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class EmployeePayrollData {
     String employeeName;
@@ -28,6 +29,11 @@ public class EmployeePayrollData {
     @Override
     public String toString() {
         return "Employee Id: '" + employeeID + '\'' + ", Employee Name: " + employeeName + ", Employee Salary: " + employeeSalary;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(employeeName, gender, employeeSalary, startDate);
     }
 
     @Override
